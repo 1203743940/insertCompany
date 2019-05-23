@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mapper.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.sqlserver122.AttributeIDMapper" >
+    <resultMap id="BaseResultMap" type="com.example.demo.model.AttributeID" >
+        <id column="ATTRIBUTEID" property="attributeID" jdbcType="VARCHAR" />
+        <result column="ATTRIBUTEGUID" property="attributeGUID" jdbcType="VARCHAR" />
+
+        <result column="COMPANYID" property="companyID" jdbcType="VARCHAR" />
+
+
+
+
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        ATTRIBUTEID, ATTRIBUTEGUID, COMPANYID
+    </sql>
+
+
+
+    <select id="findAttributeGUID" resultType="string"  >
+        SELECT NEWID()
+    </select>
+
+    <!--//将司机微信重置，让司机重新绑定-->
+
+    <select id="insert" >
+        insert into [ePortal].[SystemManagement].[UserAttribute] ([AttributeGUID],[CompanyID])
+        values(#{attributeGUID},#{companyID})
+    </select>
+
+    <select id="findAttributeID"  resultMap="BaseResultMap" >
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM [ePortal].[SystemManagement].[UserAttribute]
+        WHERE AttributeGUID = #{attributeGUID}
+    </select>
+
+
+    <!--<select id="getOne" parameterType="java.lang.Long" resultMap="BaseResultMap" >-->
+    <!--SELECT-->
+    <!--<include refid="Base_Column_List" />-->
+    <!--FROM users-->
+    <!--WHERE id = #{id}-->
+    <!--</select>-->
+
+</mapper>

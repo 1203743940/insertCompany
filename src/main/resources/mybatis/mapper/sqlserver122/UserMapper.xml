@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mapper.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.sqlserver122.UserMapper" >
+    <resultMap id="BaseResultMap" type="com.example.demo.model.User" >
+        <id column="USERID" property="userID" jdbcType="VARCHAR" />
+        <result column="ACCOUNT" property="account" jdbcType="VARCHAR" />
+        <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+        <result column="ATTRIBUTEGUID" property="attributeGUID" jdbcType="VARCHAR" />
+        <result column="ATTRIBUTEID" property="attributeID" jdbcType="VARCHAR" />
+
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        USERID,ACCOUNT,REMARK,ATTRIBUTEGUID,ATTRIBUTEID
+    </sql>
+
+    <select id="findUser" resultMap="BaseResultMap"  >
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM [ePortal].[SystemManagement].[User]
+        where Account=#{account}
+    </select>
+
+    <!--//更新 [AttributeID] 和 [AttributeGUID]-->
+    <select id="updateUser" >
+        update [ePortal].[SystemManagement].[User]
+        set [AttributeID]=#{attributeID} , [attributeGUID] =#{attributeGUID} ,[Remark]= #{remark}
+        where Account=#{account}
+    </select>
+
+    <select id="findUserLast" resultMap="BaseResultMap"  >
+        SELECT  TOP 1
+        <include refid="Base_Column_List" />
+        FROM [ePortal].[SystemManagement].[User]
+        where Account like 'TK%'
+        order by Account  DESC
+    </select>
+
+
+
+
+</mapper>

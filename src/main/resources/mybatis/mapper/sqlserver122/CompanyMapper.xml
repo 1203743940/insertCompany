@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mapper.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.sqlserver122.CompanyMapper" >
+    <resultMap id="BaseResultMap" type="com.example.demo.model.Company" >
+        <id column="COMPANYID" property="companyID" jdbcType="VARCHAR" />
+        <result column="COMPANYNAME" property="companyName" jdbcType="VARCHAR" />
+        <result column="CONTACTPERSON" property="contactPerson" jdbcType="VARCHAR" />
+        <result column="TELPHONE" property="phone" jdbcType="VARCHAR" />
+
+
+
+
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        COMPANYID,COMPANYNAME,CONTACTPERSON,TELPHONE
+    </sql>
+
+    <!--//如果没有插入值，获取[CompanyID]。-->
+    <select id="findCompanyID" resultMap="BaseResultMap"  >
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM [ePortal].[SystemManagement].[Company]
+        WHERE CompanyName = #{companyName} AND CompanyType='TRK'
+    </select>
+
+    <!--//如果没有插入值，获取[CompanyID]。-->
+
+    <select id="insertCompany"  >
+       insert into [ePortal].[SystemManagement].[Company] ([CompanyName],[CompanyType],[LicenseNumber],[OrganizeCode] ,[ContactPerson] ,[Telphone])
+	   values( #{companyName},'TRK','11111111','123456', #{contactPerson}, #{phone})
+
+    </select>
+
+
+
+</mapper>
